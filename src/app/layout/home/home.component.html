@@ -523,8 +523,11 @@
           >
             <div class="col-xl-6 col-lg-6">
               <!-- <div class="prop-img backgroundimg" [ngStyle]="{'background-image': 'url(' + p.post_image.image + ')'}"> -->
-              <div class="prop-img backgroundimg">
-                <img
+              <div class="prop-img backgroundimg" >
+                 <img
+                 style="cursor: pointer;"
+                 (click)="withoutLogin($event)"
+                 name="{{ p.id }}"
                   [src]="p.post_image.image"
                   alt=""
                   class="img-responsive"
@@ -1172,7 +1175,7 @@
             />
           </mat-chip-list>
         </div>
-        <div class="form-group">
+        <div class="form-group" style="height: 11rem; overflow: auto;">
           <ul *ngFor="let t of tagsList" class="tag-ul">
             <li (click)="addTag($event)">{{ t }}</li>
           </ul>

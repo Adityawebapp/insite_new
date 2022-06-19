@@ -170,6 +170,7 @@ export class HomeComponent implements OnInit {
 var abc = localStorage.getItem("token");
 // alert(abc)
     if (abc == null) {
+      // this.toast.error("Please try again");
       alert("Please register to continue");
     } else {
       window.open(`/involvement/${value}`, "_blank");

@@ -6,6 +6,7 @@ import { ToastrService } from "ngx-toastr";
 import { FormBuilder, Validators } from "@angular/forms";
 import { MatChipInputEvent } from "@angular/material/chips";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { HttpClient } from "@angular/common/http";
 declare var $: any;
 
 export interface Taggs {
@@ -18,6 +19,7 @@ export interface Taggs {
   styleUrls: ["./mark-involvement-gallery.component.css"],
 })
 export class MarkInvolvementGalleryComponent implements OnInit {
+  [x: string]: any;
   selectable = true;
   removable = true;
   addOnBlur = true;
@@ -63,7 +65,8 @@ export class MarkInvolvementGalleryComponent implements OnInit {
     private api: ApiService,
     private toast: ToastrService,
     private Form: FormBuilder,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -161,7 +164,7 @@ export class MarkInvolvementGalleryComponent implements OnInit {
         var data = x["data"];
         console.log(data, "Post Details");
         this.post_images = data.post_images;
-        console.log(this.post_images,"line");
+        console.log(this.post_images, "line");
         this.wholeData = data;
         this._albums = [];
         var self = this;
@@ -345,6 +348,7 @@ export class MarkInvolvementGalleryComponent implements OnInit {
 
   selectedImages: any = [];
   base64Image: any = [];
+  image_Id: any = [];
   chooseImage(event) {
     var that = this;
     this.otherOption = true;
@@ -357,14 +361,14 @@ export class MarkInvolvementGalleryComponent implements OnInit {
       reader.readAsDataURL(img);
       this.selectedImages.push(img);
     }
-    // let file = event.target.files[0];
-    // var that = this;
-    // const reader = new FileReader();
-    // reader.onload = function() {
-    //   that.base64Image.push(reader.result);
-    // };
-    // reader.readAsDataURL(event.target.files[0]);
-    // this.selectedImages.push(event.target.files[0]);
+    let file = event.target.files[0];
+    var that = this;
+    const reader = new FileReader();
+    reader.onload = function () {
+      that.base64Image.push(reader.result);
+    };
+    reader.readAsDataURL(event.target.files[0]);
+    this.selectedImages.push(event.target.files[0]);
   }
   imageTags: any = [];
   getImageTag() {
@@ -374,15 +378,36 @@ export class MarkInvolvementGalleryComponent implements OnInit {
     // console.log(this.imageTags)
   }
 
-  removeImage(image, index) {
-   
-    this.base64Image.splice(index, 1);
-    this.imageTags.splice(index, 1);
-    this.selectedImages.splice(index, 1);
-    if (this.selectedImages.length == 1) {
-      this.otherOption = true;
-    }
+  removeImage(img, index) {
+    this.image_Id = img.id;
+    // alert(this.image_Id);
+    console.log(this.image_Id, "image data ");
+
+
+    this.api.deletePostImage(img).subscribe(
+      (res) => {
+        console.log(res, "delete image form api");
+        this.imageId.splice(index , 1)
+        this.toast.success("Image submit successfully");
+
+        // window.location.reload()
+        this.post_images.splice(img, 1);
+        console.log(this.post_images,"line no 396")
+     
+      },
+      (error) => {
+        this.toast.error("image not delete");
+      }
+    );
+
+    // this.image_Id.splice(img.id, 1);
+    // this.imageTags.splice(img.id, 1);
+    // this.selectedImages.splice(img.id, 1);
+    // if (this.selectedImages.length == 1) {
+    //   this.otherOption = true;
+    // }
   }
+
   FinalDate;
   formatDate(date) {
     var d = new Date(date),
@@ -453,7 +478,7 @@ export class MarkInvolvementGalleryComponent implements OnInit {
         }, 500);
       },
       (error) => {
-        this.toast.error(error.error.message);
+        this.toast.error(error.error.message, "please try again");
       }
     );
   }

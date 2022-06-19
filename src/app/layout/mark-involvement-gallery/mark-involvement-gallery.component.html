@@ -141,7 +141,8 @@
                       <ul class="pictures">
                         <li class="marks" *ngFor="let img of post_images;let i=index">
                           <a href="JavaScript:void(0);" data-toggle="modal" data-target="#my-pic">
-                            <img class="imageToZoom" src={{img.image}}></a>
+                            <img class="imageToZoom" src={{img.image}}>  </a>
+                          
                           <button class="remove-pic" (click)="removeImage(img, i)" >&#10006;</button>
                           <label class="d-block">
                             <input type="text" [(ngModel)]="img.image_tag"

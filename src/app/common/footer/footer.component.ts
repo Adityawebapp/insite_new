@@ -323,10 +323,14 @@ export class FooterComponent implements OnInit {
     if (!company_name || company_name == "") {
       this.loginError("Company name can not be blank");
       return false;
-    } else if (/\d/.test(company_name)) {
-      this.loginError("Company name can not have numbers");
-      return false;
-    } else if (/[~`@!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(company_name)) {
+    } 
+    
+    // else if (/\d/.test(company_name)) {
+    //   this.loginError("Company name can not have numbers");
+    //   return false;
+    // }
+    
+    else if (/[~`@!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(company_name)) {
       this.loginError("Company name can not have special characters");
       return false;
     }

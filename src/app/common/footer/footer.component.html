@@ -26,11 +26,11 @@
       </div>
       <div class="col-xl-3 col-lg-3 col-sm-6 col-md-3 col-xs-12">
         <div class="bottom-list">
-          <h6>LET US HELP YOU</h6>
+          <h6>LEGAL</h6>
           <ul>
             <li>
               <!-- <a href="https://api.insite.city/admin_panel/settings_management/privacy_policy/" target="_blank" title="">Legal Policy</a> -->
-              <a routerLink="/privacy-policy">Legal Policy</a>
+              <a routerLink="/privacy-policy">Privacy Policy</a>
             </li>
             <li>
               <!-- <a href="https://api.insite.city/admin_panel/settings_management/terms_and_condition/" target="_blank" title="">Terms & Conditions</a> -->
@@ -217,6 +217,8 @@
                 <input type="password" name="password" formControlName="password" placeholder="Enter password"
                   class="form-control">
               </div>
+            <button type="submit" (click)="onSubmit()" class="btn btn-simple btn-block">LOGIN</button>
+
             </form>
           </div>
         </div>
@@ -228,7 +230,7 @@
         </div>
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <button type="submit" (click)="onSubmit()" class="btn btn-simple btn-block">LOGIN</button>
+            <!-- <button type="submit" (click)="onSubmit()" class="btn btn-simple btn-block">LOGIN</button> -->
             <p>Or</p>
             <!-- <button class="btn btn-block btn-third" data-toggle="modal" (click)="load_guest_number()"
               data-dismiss="modal">CONTINUE AS GUEST</button> -->
@@ -266,8 +268,8 @@
           <div class="form-group">
             <input id="forgotEmail" type="email" placeholder="Enter email" class="form-control">
           </div>
+          <button (click)="forgotPass()" class="btn btn-simple btn-block" data-toggle="modal">SEND LINK</button>
         </form>
-        <button (click)="forgotPass()" class="btn btn-simple btn-block" data-toggle="modal">SEND LINK</button>
       </div>
     </div>
   </div>
@@ -678,8 +680,8 @@
         </div>
         <div class="feedback-para">
           <p>Thank you for sharing your thoughts, we value your opinion! INSITE was developed for all of you in the
-            architecture & designed community. It is a work in progress and we are determined to keep improving it in
-            orders to promote community, knowledge and discussion on all architecture and design related topics.
+            architecture & design community. It is a work in progress and we are determined to keep improving it in
+            order to promote community, knowledge and discussion on all architecture and design related topics.
             Learning about your experience using INSITE is enormously helpful.</p>
         </div>
         <button class="btn btn-simple btn-block" (click)="sendFeedback()">SEND</button>

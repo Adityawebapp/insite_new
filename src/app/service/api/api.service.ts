@@ -412,8 +412,26 @@ export class ApiService {
     );
   }
 
+
+  addPost(data, userId) {
+    return this.http.post(
+      this.baseurl + "api/v1/posts/15/add_image/" + userId,
+      data,
+      { headers: this.tokenHeader }
+    );
+  }
+
   removepost(data) {
     return this.http.post(this.baseurl + "api/v1/posts/remove_post", data, {
+      headers: this.tokenHeader,
+    });
+  }
+
+
+  // deletePostImage page deelte api 
+
+  deletePostImage(data){
+    return this.http.post(this.baseurl + "api/v1/posts/delete_image", data, {
       headers: this.tokenHeader,
     });
   }
@@ -457,6 +475,7 @@ export class ApiService {
       { headers: this.tokenHeader }
     );
   }
+
 
   create_post_invite_user(data) {
     return this.http.post(
