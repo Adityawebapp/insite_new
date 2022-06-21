@@ -57,12 +57,14 @@ export class InvolvementComponent implements OnInit {
   is_reported;
   username;
   taggedUsers: "";
-  UserData:any =[]
+  UserData: any = [];
   userTaggs: any = [];
   userTagsList = [];
   userTag = new FormControl("");
   created_by: string;
   finaldata;
+  userName;
+  formdata;
   constructor(
     private api: ApiService,
     private route: ActivatedRoute,
@@ -70,27 +72,29 @@ export class InvolvementComponent implements OnInit {
     private Form: FormBuilder,
     private router: Router,
     private _lightbox: Lightbox
-  ) {}
+  ) {
+    this.replayForm = this.Form.group({
+      name: "",
+    });
+  }
 
+  
   ngOnInit() {
-
-    
-   this.UserData = localStorage.getItem('userData');
-   console.log(this.UserData,"line no 77")
+    this.UserData = localStorage.getItem("userData");
+    console.log(this.UserData, "line no 77");
     this.username =
       localStorage.getItem("userData") != undefined
         ? JSON.parse(localStorage.getItem("userData")).username
         : "";
 
-        console.log(this.username,"55555555555555")
+    console.log(this.username, "55555555555555");
 
     this.route.params.subscribe((params) => {
-     
       this.post_id = params["post_id"];
 
       this.userData = this.api.getUserData().company_detail.name;
-       console.log(this.userData,"4464646464")
-      
+      console.log(this.userData, "4464646464");
+
       this.getAuthUsers();
       if (!this.userData) {
         this.toast.error("Please login");
@@ -105,7 +109,7 @@ export class InvolvementComponent implements OnInit {
 
         // $('#likes').modal('show')
       }
-      
+
       this.getProjectData();
 
       this.inviteForm = this.Form.group({
@@ -214,19 +218,16 @@ export class InvolvementComponent implements OnInit {
         }
       );
   }
-record:any=[]
-created_by_name:any
-new_created_by : any;
-
+  record: any = [];
+  created_by_name: any;
+  new_created_by: any;
 
   getPostDetails(id) {
     this.api.getProjectPostDetails(id).subscribe(
       (x) => {
         var data = x["data"];
-        this.created_by_name= data.created_by;
-         console.log(this.created_by_name,"this is myyyyyyyyyy")
-
-         
+        this.created_by_name = data.created_by;
+        console.log(this.created_by_name, "this is myyyyyyyyyy");
 
         console.log(data, "Post Details");
         this.post_images = data.post_images;
@@ -241,7 +242,7 @@ new_created_by : any;
           };
 
           this._albums.push(album);
-          console.log(this._albums,"post detailes from custom side")
+          console.log(this._albums, "post detailes from custom side");
         }
 
         // console.log(this.post_images)
@@ -253,7 +254,7 @@ new_created_by : any;
         }
 
         this.postname = data.name;
-        console.log(data,"line 257")
+        console.log(data, "line 257");
         this.created_by = data.created_by_name;
         this.new_created_by = data.created_by;
         this.postlocation = data.city + ", " + data.country + " | " + data.year;
@@ -290,7 +291,6 @@ new_created_by : any;
   // content = document.getElementById("content");
 
   commentPost() {
-
     if (this.content && this.post_id) {
       if (this.content.value == "" || this.content.value == null) {
         this.commentsPostError("This field is required");
@@ -301,23 +301,20 @@ new_created_by : any;
         .commentPost({ post_id: this.post_id, content: this.content.value })
         .subscribe(
           (x) => {
-            console.log(x,"this is from submit comment")
+            console.log(x, "this is from submit comment");
 
             this.comments = [];
             this.getPostDetails(this.post_id);
             this.content.reset();
             this.toast.success(x["message"]);
             // location.reload();
-
           },
           (err) => {
-       
             this.toast.error(
               "Something went wrong. Please try after some time"
             );
-
           }
-        )   ;
+        );
     }
   }
 
@@ -329,6 +326,7 @@ new_created_by : any;
     $("#show_img").attr("src", img_url);
   }
 
+  // single like button
   likeDislikePost(current_status) {
     if (current_status == true) {
       var final_status = false;
@@ -347,7 +345,9 @@ new_created_by : any;
           this.toast.success(response["message"]);
         },
         (err) => {
-          this.toast.error("Something went wrong. Please try after some time");
+          this.toast.error(
+            "Something went wrong. Please try after some time adafafaf"
+          );
         }
       );
   }
@@ -495,8 +495,6 @@ new_created_by : any;
     }
   }
 
- 
-
   //
 
   //  add2(event: MatChipInputEvent): void {
@@ -573,8 +571,6 @@ new_created_by : any;
     if (this.inviteForm.value.email != "")
       postData.append("email_id", this.inviteForm.value.email);
 
-
-
     this.api.inviteuser(postData).subscribe(
       (a) => {
         this.inviteResponse = a["response"];
@@ -613,9 +609,9 @@ new_created_by : any;
     );
   }
   postDetail = [];
-  
+
   ProjectData;
-  new1_created_by : any;
+  new1_created_by: any;
   createdByuser;
   getProjectData() {
     this.api.getProjectDetails(this.post_id).subscribe((res) => {
@@ -627,7 +623,6 @@ new_created_by : any;
     });
   }
 
-
   navigateProfile() {
     if (this.new_created_by == this.username) {
       this.router.navigate(["/my-profile/"]);
@@ -636,7 +631,6 @@ new_created_by : any;
     }
   }
 
-  
   tagsUsername = [];
   taggedUsrsList = [];
   getAuthUsers() {
@@ -653,8 +647,18 @@ new_created_by : any;
     console.log(this.selectedTagsss, "selectedTagsss");
   }
 
+  // replay from 
 
-  blank(){
+  replayForm = new FormGroup({
+    name: new FormControl("", [Validators.required]),
+  });
 
+  get name() {
+    return this.replayForm.get("name");
+  }
+
+
+  replySubmit(result) {
+    console.log(result);
   }
 }

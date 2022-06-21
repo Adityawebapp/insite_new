@@ -130,7 +130,7 @@ export class HomeComponent implements OnInit {
   userDataa: any;
   inputnametwo = "Select category";
   inputname = "Select Project Type";
-
+  commandNotification=false
   cur_lat: any;
   cur_lng: any;
 
@@ -171,6 +171,8 @@ var abc = localStorage.getItem("token");
 // alert(abc)
     if (abc == null) {
       // this.toast.error("Please try again");
+
+      this.commandNotification=true;
       alert("Please register to continue");
     } else {
       window.open(`/involvement/${value}`, "_blank");
