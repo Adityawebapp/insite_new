@@ -24,6 +24,7 @@ import { FaqComponent } from './layout/faq/faq.component';
 import { TermsConditionsComponent } from './layout/terms-conditions/terms-conditions.component';
 import { AboutUsComponent } from './layout/about-us/about-us.component';
 import { CreateProfileComponent } from './layout/create-profile/create-profile.component';
+import { DisclaimerComponent } from './layout/disclaimer/disclaimer.component';
 
 
 const routes: Routes = ([
@@ -54,7 +55,8 @@ const routes: Routes = ([
   { path: 'terms-&-conditions', component: TermsConditionsComponent },
   { path: 'about-us', component: AboutUsComponent },
   { path: 'chat-insight/:id', component: ChatInsightComponent },
-  {path:'notificationView/:id',component:NotificationsViewComponent}
+  {path:'notificationView/:id',component:NotificationsViewComponent},
+  {path:'disclaimer',component:DisclaimerComponent}
 ]);
 
 @NgModule({

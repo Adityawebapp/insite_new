@@ -35,19 +35,19 @@ export class ApiService {
 
   // For TOken Header2
 
-
   tokenHeader2 = new HttpHeaders().set(
     "Authorization",
-     localStorage.getItem("token")
+    localStorage.getItem("token")
   );
-
-
 
   login(data): Observable<any> {
     return this.http.post(`${this.baseurl}api/v1/users/login`, data);
   }
   getAddressNew(data): Observable<any> {
-    return this.http.post(`https://api.insite.city/api/v1/extra/get_address`, data);
+    return this.http.post(
+      `https://api.insite.city/api/v1/extra/get_address`,
+      data
+    );
   }
 
   auto_detect_country_code(): Observable<any> {
@@ -62,7 +62,7 @@ export class ApiService {
   guest_signup(data): Observable<any> {
     return this.http.post(`${this.baseurl}api/v1/users/registration`, data);
   }
-  
+
   guest_resetPassword(data): Observable<any> {
     return this.http.post(`${this.baseurl}api/v1/users/password_reset`, data);
   }
@@ -76,9 +76,10 @@ export class ApiService {
 
   // for getting lat and lon from address
   get_latlng(address): Observable<any> {
-    return this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBMKjOfr-vsOYRI5MhiFsaw0bb026Gorok`);
+    return this.http.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBMKjOfr-vsOYRI5MhiFsaw0bb026Gorok`
+    );
   }
-
 
   get_profession(): Observable<any> {
     return this.http.get(`${this.baseurl}api/v1/users/profession_list`);
@@ -110,7 +111,7 @@ export class ApiService {
       this.geocoder.reverseGeocode(
         { prox: query, mode: "retrieveAddress" },
         (result) => {
-          console.log("===========",result)
+          console.log("===========", result);
           if (result.Response.View.length > 0) {
             if (result.Response.View[0].Result.length > 0) {
               resolve(result.Response.View[0].Result);
@@ -128,8 +129,11 @@ export class ApiService {
     });
   }
 
-  getaddress(lat,lng){
-    return this.http.post('https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat,lng +'&key=AIzaSyC1uhhqUelWl23KlXJ2c3PRA6pcfagQO6M');
+  getaddress(lat, lng) {
+    return this.http.post(
+      "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat,
+      lng + "&key=AIzaSyC1uhhqUelWl23KlXJ2c3PRA6pcfagQO6M"
+    );
   }
 
   postCreateProfile(data): Observable<any> {
@@ -207,7 +211,6 @@ export class ApiService {
       { headers: this.tokenHeader }
     );
   }
-
 
   get_subscription_plan() {
     return this.http.get(
@@ -412,7 +415,6 @@ export class ApiService {
     );
   }
 
-
   addPost(data, userId) {
     return this.http.post(
       this.baseurl + "api/v1/posts/15/add_image/" + userId,
@@ -427,10 +429,9 @@ export class ApiService {
     });
   }
 
+  // deletePostImage page deelte api
 
-  // deletePostImage page deelte api 
-
-  deletePostImage(data){
+  deletePostImage(data) {
     return this.http.post(this.baseurl + "api/v1/posts/delete_image", data, {
       headers: this.tokenHeader,
     });
@@ -476,12 +477,41 @@ export class ApiService {
     );
   }
 
-
   create_post_invite_user(data) {
     return this.http.post(
       this.baseurl + "api/v1/posts/create_post_invite",
       data,
       { headers: this.tokenHeader }
     );
+  }
+
+  // For About-Us Data
+
+  t(): Observable<any> {
+    return this.http.get(`${this.baseurl}api/v1/extra/t&c`);
+  }
+
+  // For faq Data
+
+  f(): Observable<any> {
+    return this.http.get(`${this.baseurl}api/v1/extra/faq`);
+  }
+
+  // For privacy_policy Data
+
+  p(): Observable<any> {
+    return this.http.get(`${this.baseurl}api/v1/extra/privacy_policy`);
+  }
+
+  // For privacy_policy Data
+
+  a(): Observable<any> {
+    return this.http.get(`${this.baseurl}api/v1/extra/about_us`);
+  }
+
+  // For disclaimer Data
+
+  d(): Observable<any> {
+    return this.http.get(`${this.baseurl}api/v1/extra/disclaimer`);
   }
 }

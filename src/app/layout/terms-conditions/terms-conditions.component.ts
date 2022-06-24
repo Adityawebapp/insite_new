@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ApiService} from "../../service/api/api.service"
 
 @Component({
   selector: 'app-terms-conditions',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TermsConditionsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private api: ApiService) { }
+  htmlString: any;
 
   ngOnInit() {
+    this.api.t().subscribe(x => {
+      this.htmlString = x.data[0].content;
+      // console.log(this.htmlString)
+    }, err => {
+      console.log(err);
+    });
   }
 
 }
