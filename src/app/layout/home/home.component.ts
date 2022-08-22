@@ -130,7 +130,7 @@ export class HomeComponent implements OnInit {
   userDataa: any;
   inputnametwo = "Select category";
   inputname = "Select Project Type";
-  commandNotification=false
+  commandNotification = false;
   cur_lat: any;
   cur_lng: any;
 
@@ -149,9 +149,7 @@ export class HomeComponent implements OnInit {
   subscription: Subscription;
 
   ngOnInit() {
-
     document.getElementById("home_btn").click();
-
 
     if (!navigator.geolocation) {
       console.log("location in not support");
@@ -162,28 +160,19 @@ export class HomeComponent implements OnInit {
       this.cur_lng = position.coords.longitude;
     });
 
+    $(document).on("click", ".test_element", function () {
+      var value = $(this).attr("value");
+      var abc = localStorage.getItem("token");
+      // alert(abc)
+      if (abc == null) {
+        // this.toast.error("Please try again");
 
-
-
-    $(document).on("click",".test_element",function() {
-      var value = $(this).attr('value');
-var abc = localStorage.getItem("token");
-// alert(abc)
-    if (abc == null) {
-      // this.toast.error("Please try again");
-
-      this.commandNotification=true;
-      alert("Please register to continue");
-    } else {
-      window.open(`/involvement/${value}`, "_blank");
-    }
-  });
-
-
-
-
-
-
+        this.commandNotification = true;
+        alert("Please register to continue");
+      } else {
+        window.open(`/involvement/${value}`, "_blank");
+      }
+    });
 
     var langArray = [];
     $(".vodiapicker option").each(function () {
@@ -241,9 +230,13 @@ var abc = localStorage.getItem("token");
     $(document).ready(function () {
       $(".open_create_post").dblclick(function () {
         let userData = JSON.parse(localStorage.getItem("userData"));
-        
+
         // For Manufacture Modal
-        if (userData.business_type == "3"  || userData.business_type == "4"|| userData.business_type == "5") {
+        if (
+          userData.business_type == "3" ||
+          userData.business_type == "4" ||
+          userData.business_type == "5"
+        ) {
           this.othersModal = false;
           $("#manufacture").modal("show");
         } else {
@@ -267,14 +260,12 @@ var abc = localStorage.getItem("token");
     );
     //
     if (geodata.searched) {
-    
       this.current_lat = geodata.lat;
       this.current_long = geodata.lng;
       localStorage.setItem("lat", this.current_lat);
       localStorage.setItem("long", this.current_long);
       console.log(`lat  - ${this.current_lat}, long - ${this.current_long}`);
     } else {
-
       if (navigator.geolocation) {
         // Call getCurrentPosition with success and failure callbacks
         navigator.geolocation.getCurrentPosition((data) => {
@@ -538,24 +529,26 @@ var abc = localStorage.getItem("token");
     setTimeout(() => {
       this.getFilterListData();
     }, 3000);
+
+   
   }
 
   // save tags on click save button
   saveTag() {
     $("#mtChip").value = "";
   }
-    // For demo Function
-    demoFunction() {
-      // var value = e.target.id;
-      alert("");
-      // this.nullName = localStorage.getItem("token");
-      // var abc = localStorage.getItem("token");
-      // if (abc == null) {
-      //   this.toast.error("Please register to continue");
-      // } else {
-      //   window.open(`/involvement/${value}`, "_blank");
-      // }
-    }
+  // For demo Function
+  demoFunction() {
+    // var value = e.target.id;
+    alert("");
+    // this.nullName = localStorage.getItem("token");
+    // var abc = localStorage.getItem("token");
+    // if (abc == null) {
+    //   this.toast.error("Please register to continue");
+    // } else {
+    //   window.open(`/involvement/${value}`, "_blank");
+    // }
+  }
 
   // add tag on select from list
   addTag(event) {
@@ -939,36 +932,37 @@ var abc = localStorage.getItem("token");
         sort_projects: this.favoriteList,
         tags: this.selectEnterTag,
       }).subscribe((response: any) => {
-        if(response["data"].posts.length === 0){
-          $(".prop-card").css("display","none")
+        if (response["data"].posts.length === 0) {
+          $(".prop-card").css("display", "none");
           // alert("There is no Post")
           this.toast.error("There is no posts");
           this.map.setZoom(7);
 
-// for getting lat and of country
+          // for getting lat and of country
 
-      this.ApiService.get_latlng(this.selectedCountryFilter).subscribe((response: any) => {
-            console.log(response,"lat and lng from country");
-            var lat = response.results[0].geometry.location.lat;
-            var lon = response.results[0].geometry.location.lng;
-            var filterLocation = new google.maps.LatLng(lat, lon);
-            this.map.setCenter(filterLocation);
-          })  
-        }else{
-          $(".prop-card").css("display","block")
+          this.ApiService.get_latlng(this.selectedCountryFilter).subscribe(
+            (response: any) => {
+              console.log(response, "lat and lng from country");
+              var lat = response.results[0].geometry.location.lat;
+              var lon = response.results[0].geometry.location.lng;
+              var filterLocation = new google.maps.LatLng(lat, lon);
+              this.map.setCenter(filterLocation);
+            }
+          );
+        } else {
+          $(".prop-card").css("display", "block");
 
           this.recentPosts = response["data"].latest_post;
           this.recentPosts = response["data"].posts;
           this.posts = response.data.posts;
           this.business_pins = response.data.business_pins;
-  
+
           this.questionPosts = response.data.questions;
-  
-          console.log(response["data"],"FULL DATA")
+
+          console.log(response["data"], "FULL DATA");
           if (this.selectedCountryFilter != "") {
             this.initMap(5);
-          }
-           else {
+          } else {
             this.initMap("");
           }
           setTimeout(() => {
@@ -976,15 +970,12 @@ var abc = localStorage.getItem("token");
               var lat = this.posts[0].lat;
               var lon = this.posts[0].lon;
               var filterLocation = new google.maps.LatLng(lat, lon);
-            
+
               this.map.setCenter(filterLocation);
             }
-           
           }, 500);
         }
-        console.log(response["data"],"original full post data");
-      
-       
+        console.log(response["data"], "original full post data");
       });
     } else {
       this.ApiService.getHomePageDataa({
@@ -1603,7 +1594,7 @@ var abc = localStorage.getItem("token");
       // console.log(this.getPosition().lat(), this.getPosition().lng())
       var lat = this.post_marker2.getPosition().lat();
       var lng = this.post_marker2.getPosition().lng();
-  
+
       $("#map-lat").val(lat);
       $("#map-lon").val(lng);
       this.fav = 0;
@@ -1721,8 +1712,8 @@ var abc = localStorage.getItem("token");
         map,
         this.infowindow,
         `<a id="ourModal" value="` +
-        this.posts[i].id +
-        `"   class="test_element"> 
+          this.posts[i].id +
+          `"   class="test_element"> 
      
         <div
       class="prop-card m-0 text-center bg-white">
@@ -2418,8 +2409,6 @@ var abc = localStorage.getItem("token");
       postData.append("city", this.city),
       postData.append("zip_code", this.posttalcode),
       postData.append("street", ""),
-
-
       this.ApiService.postsCreate(postData).subscribe(
         (response: any) => {
           this.toast.success("success", response.message);
@@ -2431,10 +2420,8 @@ var abc = localStorage.getItem("token");
         (error) => {
           this.toast.error(error.error.message);
         }
-
       );
   }
-
 
   submit_create_posts(e) {
     this.getTags();
@@ -2604,8 +2591,6 @@ var abc = localStorage.getItem("token");
     }
   }
 
-
-
   myprofileClick() {
     var res = $(this).attr("data-id");
 
@@ -2621,6 +2606,5 @@ var abc = localStorage.getItem("token");
     return false;
   }
 
-  currentYear:number = new Date().getFullYear();
-
+  currentYear: number = new Date().getFullYear();
 }

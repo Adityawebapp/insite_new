@@ -531,8 +531,8 @@
               class="form-control">
           </div>
           <div class="form-group" >
-            <input formControlName="description" type="text" name="description" placeholder="Add description"
-              class="form-control" style="height: 6rem;">
+            <textarea formControlName="description" type="text" name="description" placeholder="Add description"
+              class="form-control" style="height: 6rem;"></textarea>
           </div>
           <div class="form-group">
             <select formControlName="bussiness_area" (click)="getemp()" id='seloption' class="form-control">
@@ -597,9 +597,9 @@
     <div class="modal-content ">
       <div class="modal-header my-modal-header ">
         <button type="button " class="close " data-dismiss="modal">&times;</button>
-        <h3 class="text-center ">CREATE INDIVIDUAL PROFILE </h3>
+        <h3 class="text-center ">CREATE INDIVIDUAL PROFILE</h3>
       </div>
-      <form [formGroup]="create_personal_profile_page1" (ngSubmit)="submit_create_personal_profile_page1($event)">
+      <form [formGroup]="create_personal_profile_page1" (ngSubmit)="submit_create_personal_profile_page1($event)" #gfg = "ngForm">
         <div class="modal-body my-modal-body ">
           <div class="form-group ">
             <input formControlName="username" type="text" name="username" placeholder="Enter username"  class="form-control ">
@@ -617,6 +617,11 @@
           <div class="form-group ">
             <input formControlName="name"  type="text " name="name" placeholder="Enter your name"  class="form-control ">
           </div>
+          <div class="form-group">
+            <textarea formControlName="description"  type="text" name="description" placeholder="Add Description"
+            class="form-control" style="height: 6rem;"></textarea>
+          </div>
+      
           <div class="form-group ">
             <select formControlName="profession" class="form-control">
               <option hidden class="light-color-me">Select Profession</option>
@@ -642,6 +647,8 @@
             <input type="checkbox" name="accept2" id="checkme2"><span><a class="btn-terms" data-target="#terms"
                 data-toggle="modal">Accept Terms & Conditions</a></span>
           </div>
+
+         <p class="text-black"> {{ gfg.value | json }}  </p> 
 
           <button type="submit" id="saves2" class="btn btn-simple btn-block">SAVE</button>
           <button class="btn btn-third btn-block " data-dismiss="modal">CANCEL</button>

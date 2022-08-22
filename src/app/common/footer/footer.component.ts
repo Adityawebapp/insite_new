@@ -204,6 +204,7 @@ export class FooterComponent implements OnInit {
       password: ["", Validators.required],
       confirm_password: ["", Validators.required],
       name: ["", Validators.required],
+      description: ["", Validators.required],
       profession: ["Select Profession", Validators.required],
       picture: [null, Validators.required],
     });
@@ -299,7 +300,7 @@ export class FooterComponent implements OnInit {
     //HERE******************
     this.create_personal_profile_pageform();
     this.api_get_profession();
-    console.log(this.api_get_profession(),"sdfkslafsdfafasf ");
+    console.log(this.api_get_profession(),"303  page  ");
   }
 
   // forget_pass(){
@@ -316,10 +317,10 @@ export class FooterComponent implements OnInit {
       this.create_company_profile_page1.value.confirm_password;
     var picture = this.create_company_profile_page1.value.picture;
 
-    if (!username || username == "") {
-      this.loginError("Username can not be empty");
-      return false;
-    }
+    // if (!username || username == "") {
+    //   this.loginError("Username can not be empty");
+    //   return false;
+    // }
 
     if (!company_name || company_name == "") {
       this.loginError("Company name can not be blank");
@@ -475,20 +476,29 @@ export class FooterComponent implements OnInit {
       this.create_personal_profile_page1.value.confirm_password;
     var name = this.create_personal_profile_page1.value.name;
     var profession = this.create_personal_profile_page1.value.profession;
+    var description = this.create_personal_profile_page1.value.description;
     var picture = this.selectedFile;
     this.email = email;
     this.password = password;
 
-    if (!username || username == "") {
-      this.loginError("Username can not be empty");
-      return false;
-    } else if (/[~`@!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(username)) {
-      this.loginError("Username can not contain special characters");
-      return false;
-    } else if (/\s/g.test(username)) {
-      this.loginError("Username can not contain space");
-      return false;
-    }
+  
+
+    // if (!username || username == "") {
+    //   this.loginError("username can not be empty");
+    //   return false;
+    // } else if (/[~`@!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(username)) {
+    //   this.loginError("Username can not contain special characters");
+    //   return false;
+    // } else if (/\s/g.test(username)) {
+    //   this.loginError("Username can not contain space");
+    //   return false;
+    // }
+
+    // if (!description || description == "") {
+    //   this.loginError("Username can not be empty");
+    //   return false;
+    // }
+    
     if (!email || email == "") {
       this.loginError("email can not be blank");
       return false;
@@ -663,7 +673,7 @@ export class FooterComponent implements OnInit {
   api_get_bussiness_area() {
     this.ApiService.get_bussiness_area().subscribe(
       (response) => {
-        console.log(response.data);
+        console.log(response.data,"select area");
         this.bussiness_area = response.data;
       },
       (error) => {
@@ -824,6 +834,10 @@ export class FooterComponent implements OnInit {
         "profession",
         this.create_personal_profile_page1.value.profession
       ),
+      data.append(
+        "description",
+        this.create_personal_profile_page1.value.description
+      ),
       data.append("profile_image", this.selectedFile, this.selectedFile.name);
      
     // data.append('profile_image',this.create_personal_profile_page1.value.picture),
@@ -836,7 +850,6 @@ export class FooterComponent implements OnInit {
       data.append("address_line1", ""),
       data.append("address_line2", ""),
       data.append("address_line3", ""),
-      data.append("description", ""),
       data.append("bussiness_area", ""),
       data.append("year_of_foundation", ""),
       data.append("lat", ""),

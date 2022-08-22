@@ -102,8 +102,7 @@
             <h6>
               <strong>Involvement</strong>
               <span *ngIf="isMarkInv"
-                >
-                <button
+                ><button
                   type="button"
                   class="btn-yellow-circle"
                   data-toggle="modal"
@@ -113,28 +112,9 @@
                 </button></span
               >
             </h6>
-
-            <div id="main">
-              <div class="">
-            
-                <div
-                  class=""
-                  id="faq"
-                  style="height: 25rem; overflow: auto"
-                >
-                  <div  class="" *ngFor="let c of markdata; let i = index">
-
-                  <h6 style="background-color: #ffff; margin: 10px 0; padding: 10px;">{{c.keyword_for_element}}</h6>
-                </div>
-                  <p>
-                </div>
-              </div>
-            </div>
-
-
           </div>
 
-          <!-- <div
+          <div
             class="inv-right-details"
             *ngFor="let allinvolvement of involvements_Arraykeys"
           >
@@ -161,13 +141,13 @@
                   <div class="product-info">
                     <h6>
                       {{ involvement?.company_name }} {{ involvement?.name }}
-                    </h6> -->
+                    </h6>
                     <!-- [routerLink]='["/users-profile", involvement?.name]' -->
-                  <!-- </div>
+                  </div>
                 </a>
               </div>
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
 
@@ -240,14 +220,20 @@
 
               <!-- like  unlike  -->
               <li>
-                <a routerLink="JavaScript:void(0);"  [ngStyle]="is_liked?{'color': 'blue'} : {'color': 'black'}"
-                  >
+                <a
+                  href="javascript:void(0)"
+                  [ngStyle]="is_liked ? { color: 'blue' } : { color: 'black' }"
+                >
                   <!-- <img
                     (click)="likeDislikePost(is_liked)"
                     src="assets/images/icon/like.png"
                   /> -->
-                  <i class="bi bi-hand-thumbs-up-fill" style="font-size: 25px" (click)="likeDislikePost()"></i>
-                  <p class="padding-0">{{ total_likes }} </p>
+                  <i
+                    class="bi bi-hand-thumbs-up-fill"
+                    style="font-size: 25px"
+                    (click)="likeDislikePost(is_liked)"
+                  ></i>
+                  <p class="padding-0">{{ total_likes }}</p>
                 </a>
               </li>
 
@@ -518,7 +504,7 @@
           <input
             class="form-control"
             type="text"
-            placeholder="Execution"
+            placeholder="{{ isFullMarkForm ? 'Product Manufacturers' : 'Execution' }}"
             readonly
           />
           <!-- <select disabled formControlName="involvement_type" class="form-control">
@@ -543,13 +529,13 @@
             class="form-control"
           />
         </div>
-
+    <div *ngIf="isFullMarkForm">
         <label class="beech-me" for="addpic">
-          <div class="prev-me-img" *ngIf="isFullMarkForm">
+          <div class="prev-me-img">
             <img id="previewImg" src="/assets/images/place_image.png" alt=" " />
           </div>
         </label>
-        <div class="form-group" *ngIf="isFullMarkForm">
+        <div class="form-group">
           <input
             type="file"
             id="addpic"
@@ -562,13 +548,15 @@
           >
         </div>
 
-        <div class="form-group" *ngIf="isFullMarkForm">
+        <div class="form-group">
           <input
             type="text"
             formControlName="link"
             placeholder="Embed the link with the picture"
             class="form-control"
           />
+        </div>
+
         </div>
 
         <div style="color: red">
@@ -587,7 +575,6 @@
     </div>
   </div>
 </div>
-
 
 <div id="remove" class="modal fade" role="dialog">
   <div class="modal-dialog">

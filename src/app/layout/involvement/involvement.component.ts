@@ -50,7 +50,7 @@ export class InvolvementComponent implements OnInit {
   markinvolvementForm;
   selectedFile = "";
   involvements_types;
-  userData;
+  userData: any = [];
   isMarkInv = false;
   isFullMarkForm = false;
   report_reasons;
@@ -82,8 +82,9 @@ export class InvolvementComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.UserData = localStorage.getItem("userData");
-    console.log(this.UserData, "line no 77");
+    this.userData = JSON.parse(localStorage.getItem("userData"));
+    this.UserData = JSON.parse(localStorage.getItem("userData"));
+    console.log(this.userData.profile_type, "line no 77");
     console.log(
       JSON.parse(localStorage.getItem("userData")).business_type,
       "line no 85"
@@ -93,15 +94,11 @@ export class InvolvementComponent implements OnInit {
     ).business_type;
     console.log(this.businessType, "line non 96");
 
-
-
     if (this.businessType == "3") {
       this.getMarkInvolvement();
     } else {
       console.log("no data found");
     }
-
-
 
     this.username =
       localStorage.getItem("userData") != undefined
@@ -147,25 +144,26 @@ export class InvolvementComponent implements OnInit {
       //check markinv eligibility
 
       if (
-        // this.userData.profile_type == "2" ||
+        JSON.parse(localStorage.getItem("userData")).profile_type == "2" ||
         JSON.parse(localStorage.getItem("userData")).profile_type == "3"
       ) {
         this.isMarkInv = true;
-
-        // if (
-        // this.userData.business_type == 3 ||
-        // this.userData.business_type == 4 ||
-        // this.userData.business_type == 5
-        // ) {
-        // this.isMarkInv = true;
-        // }
-        // if (
-        //   this.userData.business_type == 4 ||
-        //   this.userData.business_type == 5
-        // ) {
-        //   this.isFullMarkForm = true;
-        // }
+        if (
+          JSON.parse(localStorage.getItem("userData")).business_type == 3 ||
+          JSON.parse(localStorage.getItem("userData")).business_type == 4 ||
+          JSON.parse(localStorage.getItem("userData")).business_type == 5
+        ) {
+          this.isMarkInv = true;
+        }
+        if (
+          JSON.parse(localStorage.getItem("userData")).business_type == 2 ||
+          JSON.parse(localStorage.getItem("userData")).business_type == 4 ||
+          JSON.parse(localStorage.getItem("userData")).business_type == 5
+        ) {
+          this.isFullMarkForm = true;
+        }
       }
+
       this.getPostDetails(this.post_id);
     });
 
@@ -295,13 +293,13 @@ export class InvolvementComponent implements OnInit {
 
         this.total_comments = data.total_comments;
         this.is_liked = data.is_liked;
+        console.log(this.is_liked, "like like");
         this.comments = [];
         var comments = data.comments;
         for (var c = 0; c < comments.length; c++) {
           this.comments.push(comments[c]);
         }
         console.log(this.comments);
-        console.log(this.is_liked);
         this.total_likes = data.total_likes;
         this.total_reported = data.total_reported;
         this.total_shares = data.total_shares;
@@ -356,6 +354,8 @@ export class InvolvementComponent implements OnInit {
 
   // single like button
   likeDislikePost(current_status) {
+   
+    this.getPostDetails(this.post_id);
     if (current_status == true) {
       var final_status = false;
     } else {
@@ -369,7 +369,7 @@ export class InvolvementComponent implements OnInit {
       })
       .subscribe(
         (response) => {
-          this.getPostDetails(this.is_liked);
+          this.getPostDetails(this.post_id);
           this.toast.success(response["message"]);
         },
         (err) => {
