@@ -118,7 +118,10 @@
                     ></span>
                     <span *ngSwitchCase="'Job'" class="box Job"></span>
                     <span *ngSwitchCase="'Thesis'" class="box Thesis"></span>
-                    <span *ngSwitchCase="'Interior'" class="box Interior"></span>
+                    <span
+                      *ngSwitchCase="'Interior'"
+                      class="box Interior"
+                    ></span>
                     <span
                       *ngSwitchCase="'Landscape'"
                       class="box Landscape"
@@ -523,11 +526,11 @@
           >
             <div class="col-xl-6 col-lg-6">
               <!-- <div class="prop-img backgroundimg" [ngStyle]="{'background-image': 'url(' + p.post_image.image + ')'}"> -->
-              <div class="prop-img backgroundimg" >
-                 <img
-                 style="cursor: pointer;"
-                 (click)="withoutLogin($event)"
-                 name="{{ p.id }}"
+              <div class="prop-img backgroundimg">
+                <img
+                  style="cursor: pointer"
+                  (click)="withoutLogin($event)"
+                  name="{{ p.id }}"
                   [src]="p.post_image.image"
                   alt=""
                   class="img-responsive"
@@ -1175,7 +1178,7 @@
             />
           </mat-chip-list>
         </div>
-        <div class="form-group" style="height: 11rem; overflow: auto;">
+        <div class="form-group" style="height: 11rem; overflow: auto">
           <ul *ngFor="let t of tagsList" class="tag-ul">
             <li (click)="addTag($event)">{{ t }}</li>
           </ul>
@@ -1575,12 +1578,15 @@
   </div>
 </div>
 
-
-
-
-
-
-<div class="alert alert-success alert-dismissible "   *ngIf="commandNotification">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Success!</strong> Indicates a successful or positive action.
+<div
+  style="z-index: 99999; position: absolute; top: 10%; right: 0"
+  class="alert alert-warning alert-dismissible fade show"
+  role="alert"
+  *ngIf="alertnotification"
+>
+  <strong>Holy guacamole!</strong> You should check in on some of those fields
+  below.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>

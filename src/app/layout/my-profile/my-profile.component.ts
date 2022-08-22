@@ -49,6 +49,7 @@ export class MyProfileComponent implements OnInit {
   fullAddress;
   city;
   country;
+  checkToshow=true
   project_categoryData: any = [];
   map1: any;
 
@@ -123,6 +124,13 @@ export class MyProfileComponent implements OnInit {
         }
       });
     });
+
+    if (JSON.parse(localStorage.getItem("profile_type")) == "1") {
+      this.checkToshow=false
+    } else{
+      this.checkToshow=true
+    }
+    
   }
 
   zoomView: number;

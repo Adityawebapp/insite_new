@@ -89,6 +89,7 @@ export class HomeComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
+  alertnotification= false;
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   tagsList = [];
@@ -239,11 +240,16 @@ export class HomeComponent implements OnInit {
         ) {
           this.othersModal = false;
           $("#manufacture").modal("show");
+        } else if (JSON.parse(localStorage.getItem("profile_type")) == "1") {
+          alert("You need to be registered as a company in order to post a project")
+          $("#add-colleague").modal("hide");
         } else {
-          $("#involvement").modal("show");
+          $("#add-colleague").modal("show");
         }
       });
     });
+
+    
 
     // const popup = document.getElementsByClassName('.prop-card m-0');
     // popup.classList.add('displaynone');
