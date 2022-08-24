@@ -111,8 +111,6 @@ export class InvolvementComponent implements OnInit {
       // alert("ram")
       this.post_id = params["post_id"];
 
-      this.userData = this.api.getUserData().company_detail.name;
-      console.log(this.userData, "4464646464");
 
       this.getAuthUsers();
       if (!this.userData) {
