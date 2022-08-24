@@ -1868,7 +1868,7 @@ export class HomeComponent implements OnInit {
      
     
 
-          <a  target="_blank" href="/users-profile/` +
+          <  target="_blank" href="/users-profile/` +
           this.business_pins[i].username +
           `">
           <img src= "https://api.insite.city/media/` +
@@ -1927,6 +1927,7 @@ export class HomeComponent implements OnInit {
   // set question on map
   setQuestionMarkers(map) {
     for (var i = 0; i < this.questionPosts.length; i++) {
+      console.log( this.questionPosts[i].picture)
       var marker = new google.maps.Marker({
         position: {
           lat: parseFloat(this.questionPosts[i].lat),
@@ -1945,16 +1946,25 @@ export class HomeComponent implements OnInit {
           this.posts[i].id +
           `"> 
      
-        <div
-      class="prop-card m-0 text-center bg-white">
+        <div  class="prop-card m-0 text-center bg-white">
 
-         
-          
-        </div>
         <div class="prop-info pt-2">
         
-         
+        <img src= "${this.questionPosts[i].picture}" class="img-responsive responsive width="200" height="200"   >
+        <ul>
+            <li class="fw-600">` +
+          this.questionPosts[i].nickname +
+          `</li>
+            <li class="fw-600">` +
+          // this.business_pins[i].created_by_name +
+          `</li>
+          </ul>
+          <ul>
+
+</div>
+          
         </div>
+     
       </a>
       
       </div>`

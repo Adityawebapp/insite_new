@@ -449,10 +449,11 @@ export class MyProfileComponent implements OnInit {
   showName;
   companyname;
   getProfileData() {
+    
     this.api.getProfileData(this.username).subscribe(
       (d) => {
         this.profiledata = d["data"];
-        console.log(this.profiledata, "Profile Data");
+        console.log(this.profiledata, "Profile Data 999999999999999999999999999999");
         this.socialLinks1 = this.profiledata.social_links[1];
 
         if (this.profiledata.company_detail) {
